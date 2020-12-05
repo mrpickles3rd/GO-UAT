@@ -9,7 +9,7 @@ import { Person } from './Person';
 
 function App() {
   const searchInput = useRef(null);
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState({ results: [] });
   const [searchTerm, setSearchTerm] = useState('');
   const [shouldSearch, setShouldSearch] = useState(false);
 
@@ -36,9 +36,10 @@ function App() {
         }
 
         const apiKey = '920ef427de87b970927d9ab426f40df8';
-        const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`; // &append_to_response=tv
+        const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchTerm}`; // &append_to_response=tv
         const response = await fetch(url);
         const json = await response.json();
+        console.log('search multi ==== ', json);
         setSearchResult(json);
       }
 
@@ -53,8 +54,6 @@ function App() {
     },
     [],
   )
-
-  const renderBody = searchResult ? <Body searchResult={searchResult} /> : null;
 
   return (
     <div className="App">
@@ -79,14 +78,11 @@ function App() {
               <Person />
             </Route>
             <Route path="/">
-            {renderBody}
+              <Body searchResult={searchResult} />
             </Route>
           </Switch>
         </div>
       </Router>
-
-
-      {renderBody}
     </div>
   );
 }
