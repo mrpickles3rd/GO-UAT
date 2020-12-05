@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import './App.css';
+
+// import './App.css';
+import { Body } from './Body';
 
 // https://api.themoviedb.org/3/search/movie?api_key=920ef427de87b970927d9ab426f40df8&query=Jack+Reacher // &append_to_response=tv
 
 function App() {
   const searchInput = useRef(null);
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState({ results: [] });
   const [searchTerm, setSearchTerm] = useState('');
   const [shouldSearch, setShouldSearch] = useState(false);
 
@@ -65,6 +67,7 @@ function App() {
           placeholder="Search" />
         <button onClick={() => setShouldSearch(true)} >Search.</button>
       </header>
+      <Body searchResult={searchResult} />
     </div>
   );
 }
