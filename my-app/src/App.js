@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { Body } from './Body';
+import { Movie } from './Movie';
+import { Person } from './Person';
 
 // https://api.themoviedb.org/3/search/movie?api_key=920ef427de87b970927d9ab426f40df8&query=Jack+Reacher // &append_to_response=tv
 
@@ -28,7 +31,6 @@ function App() {
   useEffect(() =>
     {
       async function fetchData() {
-        console.debug('!searchTerm === ', !shouldSearch, !searchTerm)
         if (!shouldSearch && !searchTerm) { // TODO: Fix blank string error.
           return;
         }
@@ -38,8 +40,6 @@ function App() {
         const response = await fetch(url);
         const json = await response.json();
         setSearchResult(json);
-
-        console.debug('searchResult === ', json)
       }
 
       fetchData();
@@ -68,6 +68,23 @@ function App() {
           placeholder="Search" />
         <button onClick={() => setShouldSearch(true)} >Search.</button>
       </header>
+
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/movie/:movieID">
+              <Movie />
+            </Route>
+            <Route path="/person/:personID">
+              <Person />
+            </Route>
+            <Route path="/">
+            {renderBody}
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+
 
       {renderBody}
     </div>
