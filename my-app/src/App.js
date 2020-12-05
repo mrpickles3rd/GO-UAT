@@ -24,22 +24,26 @@ function App() {
     }
   }
 
-  useEffect(async () =>
+  useEffect(() =>
     {
-      console.debug('!searchTerm === ', !shouldSearch, !searchTerm)
-      if (!shouldSearch && !searchTerm) { // TODO: Fix blank string error.
-        return;
+      async function fetchData() {
+        console.debug('!searchTerm === ', !shouldSearch, !searchTerm)
+        if (!shouldSearch && !searchTerm) { // TODO: Fix blank string error.
+          return;
+        }
+
+        const apiKey = '920ef427de87b970927d9ab426f40df8';
+        const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`; // &append_to_response=tv
+        const response = await fetch(url);
+        const json = await response.json();
+        setSearchResult(json);
+
+        console.debug('searchResult === ', json)
       }
 
-      const apiKey = '920ef427de87b970927d9ab426f40df8';
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`; // &append_to_response=tv
-      const response = await fetch(url);
-      const json = await response.json();
-      setSearchResult(json);
-
-      console.debug('searchResult === ', json)
+      fetchData();
     },
-    [shouldSearch],
+    [shouldSearch, searchTerm],
   );
 
   useEffect(() =>
