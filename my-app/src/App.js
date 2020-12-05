@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 
 import { Body } from './Body';
 import { Movie } from './Movie';
+import { Tv } from './Tv';
 import { Person } from './Person';
 
 // https://api.themoviedb.org/3/search/movie?api_key=920ef427de87b970927d9ab426f40df8&query=Jack+Reacher // &append_to_response=tv
@@ -12,6 +13,8 @@ function App() {
   const [searchResult, setSearchResult] = useState({ results: [] });
   const [searchTerm, setSearchTerm] = useState('');
   const [shouldSearch, setShouldSearch] = useState(false);
+  const history = useHistory();
+  console.log('history === ', history)
 
   function updateSearchTerms(event) {
     event.preventDefault();
@@ -25,6 +28,7 @@ function App() {
     if (event.charCode === enterKey) {
       event.preventDefault();
       setShouldSearch(true);
+      history.push('/')
     }
   }
 
@@ -73,6 +77,9 @@ function App() {
           <Switch>
             <Route path="/movie/:movieID">
               <Movie />
+            </Route>
+            <Route path="/tv/:tvID">
+              <Tv />
             </Route>
             <Route path="/person/:personID">
               <Person />

@@ -9,7 +9,7 @@ function Person() {
     {
       async function fetchData() {
         const apiKey = '920ef427de87b970927d9ab426f40df8';
-        const url = `https://api.themoviedb.org/3/person/${personID}?api_key=${apiKey}`; // &append_to_response=tv
+        const url = `https://api.themoviedb.org/3/person/${personID}/combined_credits?api_key=${apiKey}`; // &append_to_response=tv
         const response = await fetch(url);
         const json = await response.json();
         console.log('json ==== ', json)
@@ -23,11 +23,15 @@ function Person() {
 
   return (
     <>
-      <h1>Person Page {personID}</h1>
+      <h1>Person Page {personID}</h1> {/* TODO: Replace ID with name */}
       <ul>
-        {result.cast.map(({ name, character }) => (
-          <li key={name}><b><Link to={`/person/${personID}`}>{name}</Link></b> as <i>{character}</i></li>
-        ))}
+        {result.cast.map(({ title, media_type, original_title, character, release_date, id, name, episode_count }) => {
+          const linkText = media_type === 'movie' ? `the Move ${title || original_title}` : `the TV Show ${name}`
+          const fluffyText = release_date ? `on ${release_date}` : `in episode (count) ${episode_count}`
+          return (
+          <li key={id}>Was in <b><Link to={`/${media_type}/${id}`}>{linkText}</Link></b> as <i>{character}</i> {fluffyText}</li>
+          )
+        })}
       </ul>
     </>
   )

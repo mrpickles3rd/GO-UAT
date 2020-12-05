@@ -25,8 +25,12 @@ function Movie() {
     <>
       <h1>Movie Page {movieID}</h1>
       <ul>
-        {result.cast.map(({ name, character }) => (
-          <li key={name}><b>{name}</b> as <i>{character}</i></li>
+        {result.cast.map(({ name, character, id }) => (
+          <li key={id}>
+            <Link to={`/person/${id}`}>
+              <b>{name}</b> as <i>{character}</i>
+            </Link>
+          </li>
         ))}
       </ul>
     </>
