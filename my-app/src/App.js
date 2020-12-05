@@ -7,7 +7,7 @@ import { Body } from './Body';
 
 function App() {
   const searchInput = useRef(null);
-  const [searchResult, setSearchResult] = useState({ results: [] });
+  const [searchResult, setSearchResult] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [shouldSearch, setShouldSearch] = useState(false);
 
@@ -55,6 +55,8 @@ function App() {
     [],
   )
 
+  const renderBody = searchResult ? <Body searchResult={searchResult} /> : null;
+
   return (
     <div className="App">
       <header className="App-header">
@@ -67,7 +69,8 @@ function App() {
           placeholder="Search" />
         <button onClick={() => setShouldSearch(true)} >Search.</button>
       </header>
-      <Body searchResult={searchResult} />
+
+      {renderBody}
     </div>
   );
 }
