@@ -1,5 +1,5 @@
 function Body({ searchResult }) {
-  return searchResult.results.map(({ title, original_title, release_date = null, overview = null }) => {
+  return searchResult.results.map(({ id, title, original_title, release_date = null, overview = null }) => {
     const titleAndKey = title || original_title;
     return (
       <div key={titleAndKey} >
