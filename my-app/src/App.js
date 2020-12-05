@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-// import './App.css';
 import { Body } from './Body';
 
 // https://api.themoviedb.org/3/search/movie?api_key=920ef427de87b970927d9ab426f40df8&query=Jack+Reacher // &append_to_response=tv
