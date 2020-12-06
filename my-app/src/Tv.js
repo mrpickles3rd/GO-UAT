@@ -27,7 +27,7 @@ function Tv() {
 
   return (
     <>
-      <ListTitle text={`Tv Page ${tvID}`}/>
+      <ListTitle text={`Tv Page ${tvID}`} />
       <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ name, roles, id }) => (
           <ListItem key={id}>

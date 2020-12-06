@@ -26,7 +26,7 @@ function Movie() {
 
   return (
     <>
-      <ListTitle text={`Movie Page ${movieID}`}/>
+      <ListTitle text={`Movie Page ${movieID}`} />
       <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ name, character, id }) => (
           <ListItem key={id}>

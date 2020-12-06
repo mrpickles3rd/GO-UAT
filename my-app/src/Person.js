@@ -26,7 +26,7 @@ function Person() {
 
   return (
     <>
-      <ListTitle text={`Person Page ${personID}`}/> {/* TODO: Replace ID with name */}
+      <ListTitle text={`Person Page ${personID}`} /> {/* TODO: Replace ID with name */}
       <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ title, media_type, original_title, character, release_date, id, name, episode_count }) => {
           const linkText = media_type === 'movie' ? ` the Move ${title || original_title} ` : ` the TV Show ${name} `;

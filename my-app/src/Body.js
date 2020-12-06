@@ -30,7 +30,7 @@ function Body({ searchResult }) {
     return (
       <Card className={classes.root} variant="outlined">
         <CardContent>
-          <div className={classes.clickyClicky} key={id} onClick={() => history.push(`/${media_type}/${id}`)} >
+          <div className={classes.clickyClicky} key={id} onClick={() => history.push(`/${media_type}/${id}`)}>
             <Typography variant="h5" component="h2" key={id} onClick={() => history.push(`/${media_type}/${id}`)}>
               {heading} {release_date}
             </Typography>
