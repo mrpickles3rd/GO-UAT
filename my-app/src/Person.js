@@ -4,7 +4,7 @@ import { List, ListItem, Link as UiLink } from '@material-ui/core';
 
 import { ListTitle } from './ListTitle';
 
-function Person() {
+function Person({ titleText = 'Person Page' }) {
   const [result, setResult] = useState({ cast: [] });
   const { personID } = useParams();
 
@@ -26,7 +26,7 @@ function Person() {
 
   return (
     <>
-      <ListTitle text={`Person Page ${personID}`} /> {/* TODO: Replace ID with name */}
+      <ListTitle text={titleText} /> {/* TODO: Replace ID with name */}
       <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ title, media_type, original_title, character, release_date, id, name, episode_count }) => {
           const linkText = media_type === 'movie' ? ` the Move ${title || original_title} ` : ` the TV Show ${name} `;

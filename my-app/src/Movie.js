@@ -4,7 +4,7 @@ import { List, ListItem, Link as UiLink } from '@material-ui/core';
 
 import { ListTitle } from './ListTitle';
 
-function Movie() {
+function Movie({ titleText = 'Movie Page' }) {
   const [result, setResult] = useState({ cast: [] });
   const { movieID } = useParams();
 
@@ -26,7 +26,7 @@ function Movie() {
 
   return (
     <>
-      <ListTitle text={`Movie Page ${movieID}`} />
+      <ListTitle text={titleText} />
       <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ name, character, id }) => (
           <ListItem key={id}>
