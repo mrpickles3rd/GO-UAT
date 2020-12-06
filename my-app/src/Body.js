@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Body({ searchResult, setTitleText }) {
+function Body({ filter, searchResult, setTitleText }) {
   const history = useHistory();
   const classes = useStyles();
 
-  function handleOnClick(heading, media_type, id) {
+  function handleOnClick(media_type = filter, heading, id) {
     setTitleText(heading)
     history.push(`/${media_type}/${id}`)
   }
@@ -26,25 +26,22 @@ function Body({ searchResult, setTitleText }) {
 
     let heading = 'Opps no heading info found';
 
-    if (media_type === 'movie') { // Switches are faster but we don't need the performance here.
+    if (media_type === 'movie' || filter === 'movie') { // Switches are faster but we don't need the performance here.
       heading = `Movie: ${title || original_title}`;
-    } else if (media_type === 'tv') {
+    } else if (media_type === 'tv' || filter === 'tv') {
       heading = `TV Show: ${name}`;
-    } else if (media_type === 'person') {
-      // ??? heading = `Name of the Show: ${name}`;
+    } else if (media_type === 'person' || filter === 'person') {
       heading = `Person: ${name}`;
     }
 
     return (
       <Card key={id} className={classes.root} variant="outlined">
         <CardContent>
-          <div className={classes.clickyClicky} onClick={() => handleOnClick(heading, media_type, id)}>
+          <div className={classes.clickyClicky} onClick={() => handleOnClick(media_type, heading, id)}>
             <Typography variant="h5" component="h2">
               {heading} {release_date}
             </Typography>
             <Typography variant="body2" component="p">{overview}</Typography>
-            {/* result.poster_path */}
-            {/* result.backdrop_path */}
           </div>
         </CardContent>
       </Card>

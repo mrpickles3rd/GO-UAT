@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
-import { AppBar, Toolbar, Button, TextField, Paper } from '@material-ui/core';
+import { AppBar, Toolbar, Button, TextField, Paper, Select, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Body } from './Body';
@@ -29,10 +29,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  const defaultFilter = 'multi';
+
   const [searchResult, setSearchResult] = useState({ results: [] });
   const [searchTerm, setSearchTerm] = useState('');
   const [getSearchData, setGetSearchData] = useState(false);
   const [titleText, setTitleText] = useState('');
+  const [filter, setFilter] = useState(defaultFilter);
 
   const history = useHistory();
 
@@ -58,15 +61,18 @@ function App() {
     history.push('/');
   }
 
+  function handleFilterChange({ target: { value } }) {
+    setFilter(value)
+  }
+
   useEffect(() =>
     {
       async function fetchData() {
         if (!getSearchData) {
           return;
         }
-
         const apiKey = '920ef427de87b970927d9ab426f40df8';
-        const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchTerm}`;
+        const url = `https://api.themoviedb.org/3/search/${filter}?api_key=${apiKey}&query=${searchTerm}`;
         const response = await fetch(url);
         const json = await response.json();
 
@@ -76,7 +82,7 @@ function App() {
 
       fetchData();
     },
-    [getSearchData, searchTerm],
+    [getSearchData, searchTerm, filter],
   );
 
   return (
@@ -102,6 +108,12 @@ function App() {
             >
               Search.
             </Button>
+            <Select onChange={handleFilterChange} value={filter}>
+              <MenuItem value={defaultFilter}>All</MenuItem>
+              <MenuItem value={'tv'}>TV</MenuItem>
+              <MenuItem value={'movie'}>Movie</MenuItem>
+              <MenuItem value={'person'}>People</MenuItem>
+            </Select>
           </Toolbar>
         </AppBar>
       </div>
@@ -120,7 +132,7 @@ function App() {
                 <Person titleText={titleText} />
               </Route>
               <Route path="/">
-                <Body searchResult={searchResult} setTitleText={setTitleText} />
+                <Body filter={filter} searchResult={searchResult} setTitleText={setTitleText} />
               </Route>
             </Switch>
           </div>
