@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { List, ListItem, Link as UiLink } from '@material-ui/core';
+
+import { ListTitle } from './ListTitle';
+
 
 function Tv() {
   const [result, setResult] = useState({ cast: [] });
@@ -23,21 +27,21 @@ function Tv() {
 
   return (
     <>
-      <h1>Tv Page {tvID}</h1>
-      <ul>
+      <ListTitle text={`Tv Page ${tvID}`}/>
+      <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ name, roles, id }) => (
-          <li key={id}>
-            <Link to={`/person/${id}`}>
-              <b>{name}</b>
-            </Link>
+          <ListItem key={id}>
+            <UiLink component={Link} to={`/person/${id}`}>
+              <b>{name}&nbsp;</b>
+            </UiLink>
             {
               roles
                 .map(({ character, episode_count }) => `as ${character} in episode (count) ${episode_count}`)
                 .join(' & ')
             }
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </>
   )
 }

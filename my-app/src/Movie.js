@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { List, ListItem, Link as UiLink } from '@material-ui/core';
+
+import { ListTitle } from './ListTitle';
 
 function Movie() {
   const [result, setResult] = useState({ cast: [] });
@@ -23,16 +26,16 @@ function Movie() {
 
   return (
     <>
-      <h1>Movie Page {movieID}</h1>
-      <ul>
+      <ListTitle text={`Movie Page ${movieID}`}/>
+      <List component="nav" aria-label="main mailbox folders">
         {result.cast.map(({ name, character, id }) => (
-          <li key={id}>
-            <Link to={`/person/${id}`}>
+          <ListItem key={id}>
+            <UiLink component={Link} to={`/person/${id}`}>
               <b>{name}</b> as <i>{character}</i>
-            </Link>
-          </li>
+            </UiLink>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </>
   )
 }

@@ -1,20 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { AppBar, Toolbar, Button, TextField, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { Body } from './Body';
 import { Movie } from './Movie';
 import { Tv } from './Tv';
 import { Person } from './Person';
 
-// https://api.themoviedb.org/3/search/movie?api_key=920ef427de87b970927d9ab426f40df8&query=Jack+Reacher // &append_to_response=tv
+const useStyles = makeStyles((theme) => ({
+  paperRoot: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(2),
+      width: theme.spacing(1000),
+    },
+  },
+  topNav: {
+    flexGrow: 6,
+  },
+  marginRight: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 function App() {
-  const searchInput = useRef(null);
   const [searchResult, setSearchResult] = useState({ results: [] });
   const [searchTerm, setSearchTerm] = useState('');
   const [shouldSearch, setShouldSearch] = useState(false);
   const history = useHistory();
   console.log('history === ', history)
+
+  const classes = useStyles();
 
   function updateSearchTerms(event) {
     event.preventDefault();
@@ -52,44 +73,53 @@ function App() {
     [shouldSearch, searchTerm],
   );
 
-  useEffect(() =>
-    {
-      searchInput.current.focus();
-    },
-    [],
-  )
-
   return (
     <div className="App">
-      <header className="App-header">
-        <input
-          onKeyPress={handleOnKeyPress}
-          onChange={updateSearchTerms}
-          value={searchTerm}
-          ref={searchInput}
-          type="text"
-          placeholder="Search" />
-        <button onClick={() => setShouldSearch(true)} >Search.</button>
-      </header>
+      <div className={classes.topNav}>
+        <AppBar position="static">
+          <Toolbar>
+            {/* <Typography className={classes.marginRight} variant="h6" className={classes.title}>
+              Sky Go UAT
+            </Typography> */}
+            <TextField
+              autoFocus
+              label="Search"
+              color="secondary"
+              type="text"
+              className={classes.marginRight}
+              onKeyPress={handleOnKeyPress}
+              onChange={updateSearchTerms}
+              value={searchTerm}
+            />
+            <Button className={classes.marginRight} variant="contained" color="secondary" onClick={() => setShouldSearch(true)} >
+              Search.
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </div>
 
-      <Router>
-        <div>
-          <Switch>
-            <Route path="/movie/:movieID">
-              <Movie />
-            </Route>
-            <Route path="/tv/:tvID">
-              <Tv />
-            </Route>
-            <Route path="/person/:personID">
-              <Person />
-            </Route>
-            <Route path="/">
-              <Body searchResult={searchResult} />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+      <div className={classes.paperRoot}>
+        <Paper elevation={5}>
+          <Router>
+            <div>
+              <Switch>
+                <Route path="/movie/:movieID">
+                  <Movie />
+                </Route>
+                <Route path="/tv/:tvID">
+                  <Tv />
+                </Route>
+                <Route path="/person/:personID">
+                  <Person />
+                </Route>
+                <Route path="/">
+                  <Body searchResult={searchResult} />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </Paper>
+      </div>
     </div>
   );
 }
