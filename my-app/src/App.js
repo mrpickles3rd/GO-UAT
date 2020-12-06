@@ -43,7 +43,7 @@ function App() {
         const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchTerm}`; // &append_to_response=tv
         const response = await fetch(url);
         const json = await response.json();
-        console.log('search multi ==== ', json);
+
         setSearchResult(json);
       }
 

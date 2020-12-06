@@ -7,12 +7,12 @@ function Person() {
 
   useEffect(() =>
     {
-      async function fetchData() {
+      async function fetchData() { // TODO: Move to exported function as its repetitive code.
         const apiKey = '920ef427de87b970927d9ab426f40df8';
         const url = `https://api.themoviedb.org/3/person/${personID}/combined_credits?api_key=${apiKey}`; // &append_to_response=tv
         const response = await fetch(url);
         const json = await response.json();
-        console.log('json ==== ', json)
+
         setResult(json);
       }
 

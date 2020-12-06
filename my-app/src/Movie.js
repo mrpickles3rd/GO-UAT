@@ -12,7 +12,7 @@ function Movie() {
         const url = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${apiKey}`; // &append_to_response=tv
         const response = await fetch(url);
         const json = await response.json();
-        console.log('json ==== ', json)
+
         setResult(json);
       }
 
