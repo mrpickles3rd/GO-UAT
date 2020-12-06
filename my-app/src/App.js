@@ -49,7 +49,7 @@ function App() {
     if (event.charCode === enterKey) {
       event.preventDefault();
       setShouldSearch(true);
-      history.push('/')
+      history.push('/');
     }
   }
 
@@ -91,7 +91,7 @@ function App() {
               onChange={updateSearchTerms}
               value={searchTerm}
             />
-            <Button className={classes.marginRight} variant="contained" color="secondary" onClick={() => setShouldSearch(true)} >
+            <Button className={classes.marginRight} variant="contained" color="secondary" onClick={() => setShouldSearch(true)}>
               Search.
             </Button>
           </Toolbar>
